@@ -1,0 +1,13 @@
+join-message-client:
+  - "&9&m-----------------------------------------------------"
+  - ""
+  - "&aWelcome %player_name%!"
+  - "&bEdit this message in the config!"
+  - ""
+  - "&9&m-----------------------------------------------------"
+
+# to disable just set it to ""
+join-message-broadcast:
+  - "&eWelcome %player_name%!"
+leave-message-broadcast:
+  - "&eGoodbye %player_name%!"
