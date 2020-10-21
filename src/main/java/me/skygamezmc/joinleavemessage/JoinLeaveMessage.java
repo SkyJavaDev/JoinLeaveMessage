@@ -23,7 +23,7 @@ public final class JoinLeaveMessage extends JavaPlugin implements Listener {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             System.out.println(ChatColor.GREEN + "[JoinLeaveMessage] PlaceholderAPI detected!");
         } else {
-            System.out.println(ChatColor.RED + "[JoinLeaveMessage] PlaceholderAPI was not detected! PlaceholderAPI is REQUIRED for this plugin to work!");
+            System.out.println(ChatColor.RED + "[JoinLeaveMessage] PlaceholderAPI not detected! this plugin will not function properly without it!");
             getServer().getPluginManager().disablePlugin(this);
         }
         getServer().getPluginManager().registerEvents(this, this);
@@ -37,13 +37,21 @@ public final class JoinLeaveMessage extends JavaPlugin implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         for (String joinbroadcast : getConfig().getStringList("join-message-broadcast")) {
-            String joinbc = PlaceholderAPI.setPlaceholders(event.getPlayer(), joinbroadcast);
-            event.setJoinMessage(ChatColor.translateAlternateColorCodes('&', joinbc));
+            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+                String joinbc = PlaceholderAPI.setPlaceholders(event.getPlayer(), joinbroadcast);
+                event.setJoinMessage(ChatColor.translateAlternateColorCodes('&', joinbc));
+            } else {
+                event.setJoinMessage(ChatColor.translateAlternateColorCodes('&', joinbroadcast));
+            }
         }
         getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
             for (String msg : getConfig().getStringList("join-message-client")) {
-                String joinclient = PlaceholderAPI.setPlaceholders(event.getPlayer(), msg);
-                event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', joinclient));
+                if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+                    String joinclient = PlaceholderAPI.setPlaceholders(event.getPlayer(), msg);
+                    event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', joinclient));
+                } else {
+                    event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+                }
             }
         }, 2L);
     }
@@ -51,8 +59,12 @@ public final class JoinLeaveMessage extends JavaPlugin implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerQuit(PlayerQuitEvent event) {
         for (String leavebroadcast : getConfig().getStringList("leave-message-broadcast")) {
-            String leavebc = PlaceholderAPI.setPlaceholders(event.getPlayer(), leavebroadcast);
-            event.setQuitMessage(ChatColor.translateAlternateColorCodes('&', leavebc));
+            if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+                String leavebc = PlaceholderAPI.setPlaceholders(event.getPlayer(), leavebroadcast);
+                event.setQuitMessage(ChatColor.translateAlternateColorCodes('&', leavebc));
+            } else {
+                event.setQuitMessage(ChatColor.translateAlternateColorCodes('&', leavebroadcast));
+            }
         }
     }
 
