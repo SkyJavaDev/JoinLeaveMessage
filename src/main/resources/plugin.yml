@@ -1,10 +1,10 @@
 name: JoinLeaveMessage
 version: ${project.version}
 main: me.skygamezmc.joinleavemessage.JoinLeaveMessage
-api-version: 1.16
+api-version: 1.13
 authors: [skygamezMC]
 description: A lite join/leave message!
 
-depend: [PlaceholderAPI]
+softdepend: [PlaceholderAPI]
 commands:
   jlm:
