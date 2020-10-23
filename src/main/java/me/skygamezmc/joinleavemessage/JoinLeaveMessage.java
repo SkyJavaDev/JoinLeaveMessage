@@ -24,7 +24,6 @@ public final class JoinLeaveMessage extends JavaPlugin implements Listener {
             System.out.println(ChatColor.GREEN + "[JoinLeaveMessage] PlaceholderAPI detected!");
         } else {
             System.out.println(ChatColor.RED + "[JoinLeaveMessage] PlaceholderAPI not detected! this plugin will not function properly without it!");
-            getServer().getPluginManager().disablePlugin(this);
         }
         getServer().getPluginManager().registerEvents(this, this);
     }
